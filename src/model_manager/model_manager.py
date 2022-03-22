@@ -12,6 +12,7 @@ import dill as pickle
 from . import config
 from . import util
 
+
 class ModelManager:
 
     """
@@ -126,6 +127,7 @@ class ModelManager:
 
     def _make_model_info_filepath(self, model_name: str) -> str:
         return os.path.join(self.model_dir, model_name + config.DEFAULT_EXT_INFO)
+
 
 def get_model_name(filepath):
     """ extracts the model name from model file or model info file """
