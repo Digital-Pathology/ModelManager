@@ -5,9 +5,10 @@
 
 import json
 import os
+import pickle
 from typing import Any
 
-import dill as pickle
+import cloudpickle
 
 from . import config
 from . import util
@@ -93,7 +94,7 @@ class ModelManager:
         # save model to model file
         model_file = self._make_model_filepath(model_name)
         with util.open_file(model_file) as f:
-            pickle.dump(model, f)
+            cloudpickle.dump(model, f)
         # save model info to model_info file
         if model_info is None:
             model_info = {}
