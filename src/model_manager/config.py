@@ -1,4 +1,8 @@
 
+"""
+    Configuration and global variables for the model manager
+"""
+
 import os
 
 # directory where this module is called from
