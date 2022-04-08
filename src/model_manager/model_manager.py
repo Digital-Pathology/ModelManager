@@ -6,7 +6,8 @@
 import json
 import os
 import pickle
-from typing import Any, List
+from types import ModuleType
+from typing import Any, Iterable, List
 
 import cloudpickle
 
@@ -91,7 +92,8 @@ class ModelManager:
                    model_name: str,
                    model: Any,
                    model_info: dict = None,
-                   overwrite_model: bool = False) -> None:
+                   overwrite_model: bool = False,
+                   dependency_modules: Iterable[ModuleType] = None) -> None:  # TODO - add to docstring
         """
         save_model saves a model to model_dir with info in a separate json file
 
@@ -110,6 +112,9 @@ class ModelManager:
             raise exceptions.NoOverwrite(f"can't overwrite model {model_name}")
         # save model to model file
         model_file = self._make_model_filepath(model_name)
+        if dependency_modules is not None:
+            for m in dependency_modules:
+                cloudpickle.register_pickle_by_value(m)
         with util.open_file(model_file) as f:
             cloudpickle.dump(model, f)
         # save model info to model_info file
