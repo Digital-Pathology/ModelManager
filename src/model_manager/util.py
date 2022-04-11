@@ -3,6 +3,7 @@
     Utility functions for the model manager
 """
 
+from curses.ascii import NL
 from distutils.log import error
 import io
 
@@ -25,17 +26,19 @@ def iterate_by_n(collection: Iterable[Any], n: int, yield_remainder: bool = Fals
     :yield: a set of n contiguous items from collection
     :rtype: Iterator[Any]
     """
-    if yield_remainder and error_if_remainder:
-        raise Exception("can't have your cake and eat it too")
-    i = 0
-    while i+n <= len(collection):
-        yield collection[i:i+n]
-        i += n
-    if len(collection) % n != 0:  # there is a remainder
+    nugget = []
+    for item in collection:
+        if len(nugget) == n:
+            yield nugget
+            nugget = []
+        nugget.append(item)
+    if len(nugget) == n:
+        yield nugget
+    else:
+        if error_if_remainder:
+            raise Exception(f"{len(nugget)} items left over")
         if yield_remainder:
-            yield collection[i:]
-        elif error_if_remainder:
-            raise Exception(f"{len(collection) % n} items left over")
+            yield nugget
 
 
 def open_file(filepath: str, binary: bool = True) -> io.TextIOWrapper:
