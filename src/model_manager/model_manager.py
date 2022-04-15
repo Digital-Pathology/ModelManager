@@ -56,7 +56,7 @@ class ModelManager:
         models = []
         all_model_files = os.listdir(self.model_dir)
         all_model_files.sort()
-        for model_files in util.iterate_by_n(all_model_files, n=2, ignore_remainder=False):
+        for model_files in util.iterate_by_n(all_model_files, n=2, yield_remainder=False, error_if_remainder=True):
             model_file, model_info_file = model_files
             if get_model_name(model_file) != get_model_name(model_info_file):
                 raise exceptions.ModelFilesCorrupted(f"Model files are not consistent: \
