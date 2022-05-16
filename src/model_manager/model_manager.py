@@ -1,6 +1,6 @@
 
 """
-    A simple and generalized tool for saving and loading of ML models
+A simple and generalized tool for saving and loading of ML models
 """
 
 import json
@@ -18,7 +18,7 @@ from . import exceptions
 
 class ModelManager:
     """
-     A system facilitating the saving/loading of ML models of any kind.
+    A system facilitating the saving/loading of ML models of any kind.
 
     Saved models are represented by two files: a serialized model object and a json file
     containing information about the model. These files are stored in the same directory.
